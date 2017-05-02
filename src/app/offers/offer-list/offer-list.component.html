@@ -1,0 +1,25 @@
+<div class="offers-wrapper">
+  <navigation></navigation>
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Offers List</h2>
+      <ul class="list-group">
+        <li class="list-group-item"
+          *ngFor="let offer of offers"
+          (click)="selectOffer(offer)"
+          [class.active]="offer === selectedOffer">
+          {{offer.name}}
+        </li>
+      </ul>
+      <button class="btn btn-warning" (click)="createNewOffer()">Create New Offer</button>
+    </div>
+    <div class="col-md-7 col-md-offset-1">
+      <offer-details
+        [offer]="selectedOffer"
+        [createHandler]="addOffer"
+        [updateHandler]="updateOffer"
+        [deleteHandler]="deleteOffer">
+      </offer-details>
+    </div>
+  </div>
+</div>

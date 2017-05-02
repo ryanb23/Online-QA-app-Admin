@@ -1,0 +1,25 @@
+<div class="cfields-wrapper">
+  <navigation></navigation>
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Custom Fields List</h2>
+      <ul class="list-group">
+        <li class="list-group-item"
+          *ngFor="let cfield of cfields"
+          (click)="selectCfield(cfield)"
+          [class.active]="cfield === selectedCfield">
+          {{cfield.name}}
+        </li>
+      </ul>
+      <button class="btn btn-warning" (click)="createNewCfield()">Create New Custom Field</button>
+    </div>
+    <div class="col-md-7 col-md-offset-1">
+      <cfield-details
+        [cfield]="selectedCfield"
+        [createHandler]="addCfield"
+        [updateHandler]="updateCfield"
+        [deleteHandler]="deleteCfield">
+      </cfield-details>
+    </div>
+  </div>
+</div>

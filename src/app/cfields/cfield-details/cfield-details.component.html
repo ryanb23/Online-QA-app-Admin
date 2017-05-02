@@ -1,0 +1,57 @@
+<div *ngIf="cfield" class="row">
+  <div class="col-md-12">
+    <h2 *ngIf="cfield._id">Custom Field Details</h2>
+    <h2 *ngIf="!cfield._id">New Custom Field</h2>
+  </div>
+</div>
+<div *ngIf="cfield" class="row">
+  <form class="col-md-12" name="edit_cfield">
+    <div class="form-group">
+      <label for="cfield-name">Name</label>
+      <input class="form-control" name="cfield-name" [(ngModel)]="cfield.name" placeholder="Name" />
+    </div>
+    <div class="form-group">
+      <label for="cfield-description">Description</label>
+      <textarea class="form-control" name="cfield-description" [(ngModel)]="cfield.description" placeholder="Description ..."></textarea>
+    </div>
+    <div class="form-group">
+      <label for="cfield-type">Type </label>
+      <select [(ngModel)]="cfield.type" name="cfield-type"> 
+        <option *ngFor="let type of types" [ngValue]="type.value">{{type.label}}</option>
+      </select>
+    </div>
+    <div class="form-group values-group" *ngIf="cfield.type">
+      <div class="form-group">
+        <label>Value Key</label>
+        <input type="text" class="form-control" name="cfield-key" [(ngModel)]="cfield.key" placeholder="Key ..." />
+      </div>
+      <div class="row">
+        <div *ngFor="let value of cfield.values; let i=index" class="col-xs-6">
+          <div class="form-group">
+            <label>Value {{i + 1}} <span class="glyphicon glyphicon-remove" *ngIf="cfield.values.length > 1" (click)="removeCFValue(i)"></span>
+            </label>
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-xs-5">
+                <input type="text" class="form-control" name="cfield-values{{i}}-value" [(ngModel)]="cfield.values[i].value" placeholder="Value ..." />
+              </div>
+              <div class="col-xs-7">
+                <input type="text" class="form-control" name="cfield-values{{i}}-label" [(ngModel)]="cfield.values[i].label" placeholder="Label ..." />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="form-group">
+        <br/>
+        <a (click)="addCFValue()">
+          Add another Value +
+        </a>
+      </div>
+    </div>
+    <button class="btn btn-primary" *ngIf="!cfield._id" (click)="createCfield(cfield)">Create</button>
+    <button class="btn btn-info" *ngIf="cfield._id" (click)="updateCfield(cfield)">Update</button>
+    <button class="btn btn-danger" *ngIf="cfield._id" (click)="deleteCfield(cfield._id)">Delete</button>
+  </form>
+</div>

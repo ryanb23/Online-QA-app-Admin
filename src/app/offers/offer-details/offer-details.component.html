@@ -1,0 +1,169 @@
+<div *ngIf="offer" class="row">
+  <div class="col-md-12">
+    <h2 *ngIf="offer._id">Offer Details</h2>
+    <h2 *ngIf="!offer._id">New Offer</h2>
+  </div>
+</div>
+<div *ngIf="offer" class="row">
+  <form class="col-md-12" name="edit_offer">
+    <div class="form-group">
+      <label for="offer-name" class="text-danger">Name</label>
+      <input class="form-control" name="offer-name" [(ngModel)]="offer.name" placeholder="Name" />
+    </div>
+    <div class="form-group">
+      <label for="offer-url" class="text-danger">Url</label>
+      <input class="form-control" name="offer-url" [(ngModel)]="offer.url" placeholder="Url ..."/>
+    </div>
+    <div class="form-group">
+      <label for="offer-img-url" class="text-danger">Image Url</label>
+      <input class="form-control" name="offer-img_url" [(ngModel)]="offer.img_url" placeholder="Image Url ..."/>
+    </div>
+    <div class="form-group">
+      <label for="offer-description" class="text-danger">Description</label>
+      <textarea class="form-control" name="offer-description" [(ngModel)]="offer.description" placeholder="Description ..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="text-danger">Checks</label>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="true" name="offer-checks-check_gender1-use" [(ngModel)]="offer.checks.check_gender1.use">
+              Check Gender1
+            </label>
+          </div>
+        </div>
+        <div class="panel-body" *ngIf="offer.checks.check_gender1.use" >
+          <div class="radio">
+            <label>
+              <input type="radio" name="offer-checks-check_gender1-cond" [(ngModel)]="offer.checks.check_gender1.cond" value="Male">
+              Male
+            </label>
+            <label>
+              <input type="radio" name="offer-checks-check_gender1-cond" [(ngModel)]="offer.checks.check_gender1.cond" value="Female">
+              Female
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="true" name="offer-checks-check_gender2-use" [(ngModel)]="offer.checks.check_gender2.use">
+              Check Gender2
+            </label>
+          </div>
+        </div>
+        <div class="panel-body" *ngIf="offer.checks.check_gender2.use" >
+          <div class="radio">
+            <label>
+              <input type="radio" name="offer-checks-check_gender2-cond" [(ngModel)]="offer.checks.check_gender2.cond" value="M">
+              M
+            </label>
+            <label>
+              <input type="radio" name="offer-checks-check_gender2-cond" [(ngModel)]="offer.checks.check_gender2.cond" value="F">
+              F
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="true" name="offer-checks-check_age-use" [(ngModel)]="offer.checks.check_age.use">
+              Check Age
+            </label>
+          </div>
+        </div>
+        <div class="panel-body" *ngIf="offer.checks.check_age.use" >
+          <div class="radio">
+            <label>
+              <input type="radio" name="offer-checks-check_age-cond" [(ngModel)]="offer.checks.check_age.cond" value="less">
+              Less
+            </label>
+            <label>
+              <input type="radio" name="offer-checks-check_age-cond" [(ngModel)]="offer.checks.check_age.cond" value="greater">
+              Greater
+            </label>
+            Than
+            <label *ngIf="offer.checks.check_age.cond">
+              <input class="form-control" name="offer-checks-check_age-val" [(ngModel)]="offer.checks.check_age.val" placeholder="Age Limit..."/>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <label class="text-danger">Custom Pre-Qualified Question</label>
+    <div style="padding-left: 20px;">
+      <div class="form-group">
+        <label for="offer-preqst-description">Description</label>
+        <textarea class="form-control" name="offer-preqst-description" [(ngModel)]="offer.preqst.description" placeholder="Description ..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="offer-preqst-type">Type </label>
+        <select [(ngModel)]="offer.preqst.type" name="offer-preqst-type"> 
+          <option *ngFor="let type of types" [ngValue]="type.value">{{type.label}}</option>
+        </select>
+      </div>
+      <div class="form-group values-group" *ngIf="offer.preqst.type">
+        <div class="form-group">
+          <label>Value Key</label>
+          <input type="text" class="form-control" name="offer-preqst-key" [(ngModel)]="offer.preqst.key" placeholder="Key ..." />
+        </div>
+        <div class="row">
+          <div *ngFor="let value of offer.preqst.values; let i=index" class="col-xs-6">
+            <div class="form-group">
+              <label>Value {{i + 1}}
+                <span class="glyphicon glyphicon-remove" *ngIf="offer.preqst.values.length > 1" (click)="removePreQstValue(i)"></span>
+              </label>
+              <div class="clearfix"></div>
+              <div class="row">
+                <div class="col-xs-5">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" aria-label="..." name="offer-preqst-primaryValue" [(ngModel)]="offer.preqst.primaryValue" [value]="offer.preqst.values[i].value">
+                    </span>
+                    <input type="text" class="form-control" name="offer-preqst-values{{i}}-value" aria-label="..." [(ngModel)]="offer.preqst.values[i].value" placeholder="Value ..." />
+                  </div>
+                </div>
+                <div class="col-xs-7">
+                  <input type="text" class="form-control" name="offer-preqst-values{{i}}-label" aria-label="..." [(ngModel)]="offer.preqst.values[i].label" placeholder="Label ..." />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+          <br/>
+          <a (click)="addPreQstValue()">
+            Add another Value +
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="text-danger">Custom Fields</label>
+      <div *ngFor="let cfield of cfields; let i=index" class="panel panel-default">
+        <div class="panel-heading">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="true" name="offer-cfields-cfield{{i}}-use" [(ngModel)]="offer.cfields[getIndexOfCfields(offer.cfields,cfield._id)].use" />
+              {{cfield.name}}
+            </label>
+          </div>
+        </div>
+        <div class="panel-body" *ngIf="cfield.description">
+          {{cfield.description}}
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" *ngIf="!offer._id" (click)="createOffer(offer)">Create</button>
+    <button class="btn btn-info" *ngIf="offer._id" (click)="updateOffer(offer)">Update</button>
+    <button class="btn btn-danger" *ngIf="offer._id" (click)="deleteOffer(offer._id)">Delete</button>
+  </form>
+</div>

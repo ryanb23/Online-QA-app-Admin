@@ -1,0 +1,13 @@
+.panel-heading {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+.panel-body {
+	padding: 3px 0;
+}
+.panel-body .form-group {
+	margin-bottom: 3px;
+}
+.panel {
+	margin-bottom: 3px;
+}
